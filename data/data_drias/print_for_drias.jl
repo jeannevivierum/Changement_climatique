@@ -1,4 +1,38 @@
 # Define a station DataFrame with all station you want.
+
+using DataFrames
+
+# Données fournies
+data = [
+    (48.5733, 7.7521, "Strasbourg"),
+    (43.62, 1.38, "Toulouse-Blagnac"),
+    (48.7436, 2.3928, "Orly"),
+    (43.5986, 3.8969, "Montpellier"),
+    (48.3899, -4.487, "Brest"),
+    (49.443, 1.102, "Rouen"),
+    (45.7796, 3.087, "Clermont-Ferrand"),
+    (50.6319, 3.0575, "Lille"),
+    (45.7588, 4.8414, "Lyon"),
+    (42.6974, 2.8948, "Perpignan"),
+    (47.2187, -1.5536, "Nantes"),
+    (42.6999, 9.4495, "Bastia"),
+    (48.6929, 6.1835, "Nancy"),
+    (44.8377, -0.5796, "Bordeaux"),
+    (43.2965, 5.3763, "Marseille")
+]
+
+# Création du DataFrame
+station = DataFrame(LAT = Float64[], LON = Float64[], STANAME = String[])
+
+# Remplissage du DataFrame
+for d in data
+    push!(station, d)
+end
+
+# Affichage du DataFrame
+println(station)
+
+
 # The following code will generate something in the right format to extract from DRIAS the closest grid point.
 for i = 1:nrow(station)
     println(round(station[i, :LAT]; digits = 2), ";", round(station[i, :LON], digits = 2), ";", station[i, :STANAME])
