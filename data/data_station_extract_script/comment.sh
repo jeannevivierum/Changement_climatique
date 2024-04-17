@@ -1,5 +1,13 @@
 #!/bin/sh
-sed -i "$1"' s/^/# /' "$2"
 
+# Vérifiez s'il y a deux arguments passés au script
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <range> <filename>"
+    exit 1
+fi
 
-# for i in RR_*; do ./comment 1,20 $i; done
+# Séparez la chaîne d'arguments <range> en deux variables start et end
+IFS=',' read -r start end <<< "$1"
+
+# Exécutez la commande sed avec les arguments correctement formatés
+sed -i "${start},${end}s/^/# /" "$2"
