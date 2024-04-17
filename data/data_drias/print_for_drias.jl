@@ -37,6 +37,8 @@ println(station)
 for i = 1:nrow(station)
     println(round(station[i, :LAT]; digits = 2), ";", round(station[i, :LON], digits = 2), ";", station[i, :STANAME])
 end
+
+
 # Copy paste your Output into Drias
 # Example
 # 42.54;9.49;BASTIA
@@ -50,16 +52,25 @@ end
 # 49.73;-1.94;PTE DE LA HAGUE
 # 50.57;3.1;LILLE-LESQUIN
 
-# id_to_station_STAID = Dict(
-#     O2572 => 7
-#     03958 => 3
-#     04205 => 2
-#     06258 => 6 
-#     08898 => 9
-#     10936 => 1
-#     14368 => 10
-#     15975 => 4
-#     16331 => 8
-#     17949 => 5
-# )
+id_to_station_STAID = Dict(
+    :O4230 => 4 # Montpellier
+    :03673 => 15 # Marseille
+    :02361 => 10 # Perpignan
+    :04205 => 2 # Toulouse-Blagnac
+    :06617 => 14 # Bordeaux
+    :02852 => 12 # Bastia
+    :14274 => 1 # Strasbourg
+    :159786 => 6 # Rouen
+    :18092 => 8 # Lille
+    :14368 => 3 # Orly
+    :08512 => 7 # Clermont-Ferrand
+    :14018 => 5 # Brest
+    :08529 => 9 # Lyon
+    :11471 => 11 # Nantes
+    :14403 => 13 # Nancy
+ )
 # run(`ls -1 | sed 's/P//' | sed 's/_tasminAdjusttasmaxAdjusttasAdjustprtotAdjust_France_CNRM-CERFACS-CNRM-CM5_CNRM-ALADIN63_rcp8.5_METEO-FRANCE_ADAMONT-France_SAFRAN_day_20060101-21001231.txt//'`)
+ run(`ls -1 | sed 's/P//' | sed 's/_tasminAdjusttasmaxAdjusttasAdjust_France_CNRM-CERFACS-CNRM-CM5_CNRM-ALADIN63_Historical_METEO-FRANCE_ADAMONT-France_SAFRAN_day_19510101-20051231.txt//'`)
+
+
+# P02857_tasminAdjusttasmaxAdjusttasAdjust_France_CNRM-CERFACS-CNRM-CM5_CNRM-ALADIN63_Historical_METEO-FRANCE_ADAMONT-France_SAFRAN_day_19510101-20051231.txt
