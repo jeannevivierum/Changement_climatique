@@ -1,9 +1,8 @@
-using Dates, DataFrames, DataFramesMeta
+using Dates, DataFrames, DataFramesMeta, StatsBase
 
 
-df = CSV.read("Donnees_tx/TX_STAID000032.txt", DataFrame, skipto = 22, header = 21, comment="#",dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true, ignoreemptyrows=true)
+df = CSV.read("data_tx/TX_STAID000032.txt", DataFrame, skipto = 22, header = 21, comment="#",dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true, ignoreemptyrows=true)
 
-using DataFramesMeta, StatsBase
 factor = 0.1 # conversion factor to °C
 df_month = @chain df begin
     @subset(:Q_TX .!= 9) # remove missing 
@@ -13,4 +12,4 @@ end
 
 using StatsPlots
 @df df_month plot(monthabbr.(1:12), :MONTHLY_MEAN, ribbon = :MONTHLY_STD, label = "Mean Temperature")
-ylabel!("T(°C)")
+ylabel!("Temperature(°C)")
