@@ -57,6 +57,7 @@
 # Conditions d'utilisation :
 # http://www.drias-climat.fr/accompagnement/conditionsEDC
 # -----------------------------------------------------------------------------------------------------------
+Date Tmin Tmax Tmoy
 19510101 2.47 5.19 3.68
 19510102 0.98 3.43 2.71
 19510103 -1.45 6.45 1.32
