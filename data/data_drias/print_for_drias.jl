@@ -75,4 +75,6 @@ id_to_station_STAID = Dict(
 
 # P02857_tasminAdjusttasmaxAdjusttasAdjust_France_CNRM-CERFACS-CNRM-CM5_CNRM-ALADIN63_Historical_METEO-FRANCE_ADAMONT-France_SAFRAN_day_19510101-20051231.txt
 
-CSV.read("donnees/P02361_tasminAdjusttasmaxAdjusttasAdjust_France_CNRM-CERFACS-CNRM-CM5_CNRM-ALADIN63_Historical_METEO-FRANCE_ADAMONT-France_SAFRAN_day_19510101-20051231.txt", DataFrame)
+
+# CSV.read("donnees/P02361_tasminAdjusttasmaxAdjusttasAdjust_France_CNRM-CERFACS-CNRM-CM5_CNRM-ALADIN63_Historical_METEO-FRANCE_ADAMONT-France_SAFRAN_day_19510101-20051231.txt", DataFrame)
+
