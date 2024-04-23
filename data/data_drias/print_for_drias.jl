@@ -1,7 +1,7 @@
 # Define a station DataFrame with all station you want.
 
 using DataFrames
-
+cd(@__DIR__)
 # Données fournies
 data = [
     (48.5733, 7.7521, "Strasbourg"),
@@ -70,7 +70,9 @@ id_to_station_STAID = Dict(
     :14403 => 13 # Nancy
  )
 # run(`ls -1 | sed 's/P//' | sed 's/_tasminAdjusttasmaxAdjusttasAdjustprtotAdjust_France_CNRM-CERFACS-CNRM-CM5_CNRM-ALADIN63_rcp8.5_METEO-FRANCE_ADAMONT-France_SAFRAN_day_20060101-21001231.txt//'`)
- run(`ls -1 | sed 's/P//' | sed 's/_tasminAdjusttasmaxAdjusttasAdjust_France_CNRM-CERFACS-CNRM-CM5_CNRM-ALADIN63_Historical_METEO-FRANCE_ADAMONT-France_SAFRAN_day_19510101-20051231.txt//'`)
+# run(`ls -1 | sed 's/P//' | sed 's/_tasminAdjusttasmaxAdjusttasAdjust_France_CNRM-CERFACS-CNRM-CM5_CNRM-ALADIN63_Historical_METEO-FRANCE_ADAMONT-France_SAFRAN_day_19510101-20051231.txt//'`)
 
 
 # P02857_tasminAdjusttasmaxAdjusttasAdjust_France_CNRM-CERFACS-CNRM-CM5_CNRM-ALADIN63_Historical_METEO-FRANCE_ADAMONT-France_SAFRAN_day_19510101-20051231.txt
+
+CSV.read("donnees/P02361_tasminAdjusttasmaxAdjusttasAdjust_France_CNRM-CERFACS-CNRM-CM5_CNRM-ALADIN63_Historical_METEO-FRANCE_ADAMONT-France_SAFRAN_day_19510101-20051231.txt", DataFrame)
