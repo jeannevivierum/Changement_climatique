@@ -1,7 +1,15 @@
-using Dates, DataFrames, DataFramesMeta, StatsPlots, Forecast
+using CSV
+using DataFrames
+using DataFramesMeta
+using Dates
+using StatsPlots
+using Statistics
+using Temporal
+
+
 
 # Charger les données
-df = CSV.read("data_tx/TX_STAID000032.txt", DataFrame, skipto = 22, header = 21, comment="#", dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true, ignoreemptyrows=true)
+df = CSV.read("data_tx/TX_STAID000032.txt", DataFrame, skipto = 22, header = 21, comment="#", dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
 
 # Filtrer les données entre 1970 et 2006
 df_filtered = filter(row -> year(row.DATE) >= 1970 && year(row.DATE) <= 2006, df)
