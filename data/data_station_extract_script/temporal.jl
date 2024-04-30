@@ -5,7 +5,7 @@ using Dates
 using StatsPlots
 using Statistics
 using Temporal
-
+using StatsBase
 
 
 # Charger les données
@@ -25,10 +25,6 @@ df_daily = @chain df_filtered begin
 end
 
 # Convertir les données en une série temporelle
-ts = TimeArray(df_daily.DAILY_MEAN, df_daily.DATE)
+ts = TimeArray(df_daily.DATE, df_daily.DAILY_MEAN)
 
-# Décomposer la série temporelle
-decomposition = decompose(ts)
-
-# Tracer les composantes de la décomposition
-plot(decomposition)
+plot(ts)
