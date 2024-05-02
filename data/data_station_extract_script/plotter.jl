@@ -1,7 +1,7 @@
 using Dates, DataFrames, DataFramesMeta, StatsBase
 
 
-df = CSV.read("data_tx/TX_STAID000032.txt", DataFrame, skipto = 22, header = 21, comment="#",dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true, ignoreemptyrows=true)
+df = CSV.read("data_tx/TX_STAID000032.txt", DataFrame, skipto = 22, header = 21, comment="#",dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
 
 factor = 0.1 # conversion factor to °C
 df_month = @chain df begin
