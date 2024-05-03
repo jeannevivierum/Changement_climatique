@@ -4,6 +4,7 @@ using DataFramesMeta
 using Dates
 using Statistics
 using TimeSeries: TimeArray # Importer uniquement TimeArray à partir de TimeSeries
+using Plots
 
 # Charger les données
 df = CSV.read("data/data_drias/donnees/Orly.txt", DataFrame, header=1, comment="#", dateformat="yyyymmdd", types=Dict(:Date => Date), normalizenames=true)
@@ -23,3 +24,7 @@ my_ts = TimeArray(df_daily.Date, df_daily.DAILY_MEAN) # Changer le nom de la var
 
 
 plot(my_ts)
+
+
+
+
