@@ -10,7 +10,7 @@ using Statistics
 using TimeSeries: TimeArray # Importer uniquement TimeArray à partir de TimeSeries
 
 # Charger les données
-df = CSV.read("data_tx/TX_STAID000032.txt", DataFrame, skipto = 22, header = 21, comment="#", dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
+df = CSV.read("data_tx/BASTIA.txt", DataFrame, skipto = 22, header = 21, comment="#", dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
 
 # Filtrer les données entre 1970 et 2006
 df_filtered = filter(row -> year(row.DATE) >= 1970 && year(row.DATE) <= 2006, df)
@@ -42,22 +42,6 @@ hline!([0], color=:black, linewidth=1.5)
 
 # AUTOCORRELOGRAMME EMPIRIQUE
 
-using StatsBase
-using Plots
-using CSV
-using DataFrames
-using DataFramesMeta
-using Dates
-using Statistics
-using TimeSeries: TimeArray # Importer uniquement TimeArray à partir de TimeSeries
-
-
-# Extraire les valeurs numériques de la série temporelle
-data_values = values(my_ts)
-
-# Calculer l'autocorrélogramme empirique avec un nombre maximal de décalages spécifié
-maxlag = 20 # Définir le nombre maximal de décalages
-lags = collect(0:maxlag) # Créer une plage de décalages
 autocor_values = autocor(data_values, lags)
 
 # Tracer l'autocorrélogramme empirique avec les points reliés à l'axe des abscisses et une droite d'équation nulle
