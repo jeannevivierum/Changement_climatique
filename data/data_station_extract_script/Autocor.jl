@@ -10,7 +10,7 @@ using Statistics
 using TimeSeries: TimeArray # Importer uniquement TimeArray à partir de TimeSeries
 
 # Charger les données
-df = CSV.read("data_tx/BASTIA.txt", DataFrame, skipto = 22, header = 21, comment="#", dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
+df = CSV.read("data_tx/LYON.txt", DataFrame, skipto = 22, header = 21, comment="#", dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
 
 # Filtrer les données entre 1970 et 2006
 df_filtered = filter(row -> year(row.DATE) >= 1970 && year(row.DATE) <= 2006, df)

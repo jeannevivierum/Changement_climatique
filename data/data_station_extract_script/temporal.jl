@@ -7,7 +7,7 @@ using Temporal
 using GLM
 
 # Charger les données
-df = CSV.read("data_tx/BASTIA.txt", DataFrame, skipto = 22, header = 21, comment="#", dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
+df = CSV.read("data_tx/LYON.txt", DataFrame, skipto = 22, header = 21, comment="#", dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
 
 # Filtrer les données entre 1970 et 2006
 df_filtered = filter(row -> year(row.DATE) >= 1951 && year(row.DATE) <= 2020, df)
@@ -75,7 +75,7 @@ using StatsBase
 
 function saisonnalite(data::Vector{T}, period::Int) where T
     n = length(data)
-    seasonal = similar(data, T)
+    seasonal = similar(data, T) # Vecteur de la même taille et du meme type que data 
     seasonal_count = Int(ceil(n / period))
     
     seasonal_avg = similar(data, T)
