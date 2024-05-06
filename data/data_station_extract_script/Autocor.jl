@@ -39,7 +39,6 @@ pacf_values = pacf(data_values, lags)
 plot(0:maxlag, pacf_values, xlabel="Lag", ylabel="Partial Autocorrelation", title="autocorrélogramme partiel", markershape=:circle, line=:stem)
 hline!([0], color=:black, linewidth=1.5)
 
-
 # AUTOCORRELOGRAMME EMPIRIQUE
 
 autocor_values = autocor(data_values, lags)

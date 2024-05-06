@@ -1,5 +1,8 @@
-using Dates, DataFrames, DataFramesMeta, StatsBase
-
+using Dates
+using DataFrames
+using DataFramesMeta
+using StatsBase
+using CSV
 
 df = CSV.read("data_tx/BASTIA.txt", DataFrame, skipto = 22, header = 21, comment="#",dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
 
