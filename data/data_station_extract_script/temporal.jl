@@ -33,8 +33,8 @@ function moyenne_mobile(data::Vector{T}, window_size::Int) where T
     return trend
 end
 
-# Calculer la tendance par moyenne mobile avec une fenêtre de taille 5000 (par exemple)
-trend_values = moyenne_mobile(df_daily.DAILY_MEAN, 3000)
+# Calculer la tendance par moyenne mobile avec une fenêtre de taille 730 (deux années)
+trend_values = moyenne_mobile(df_daily.DAILY_MEAN, 730)
 
 # Convertir les données en une série temporelle
 datats = TimeArray(df_daily.DATE, df_daily.DAILY_MEAN)
