@@ -5,6 +5,7 @@ using StatsPlots
 using Statistics
 using Temporal
 using GLM
+using DataFramesMeta
 
 # Charger les données
 df = CSV.read("data_tx/LYON.txt", DataFrame, skipto = 22, header = 21, comment="#", dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
@@ -21,6 +22,21 @@ df_daily = @chain df_filtered begin
     @transform(:YEAR = year.(:DATE)) # Ajouter une colonne pour l'année
     @by(:DATE, :DAILY_MEAN = mean(:TX)*factor, :DAILY_STD = std(:TX)*factor) # Grouper par DATE et prendre la moyenne / écart type
 end
+
+function moyenne_mobile(data::Vector{T}, window_size::Int) where T
+    n = length(data)
+    trend = similar(data, T)
+    for i in 1:n
+        weights = exp.(-(collect(1:window_size) .- (window_size ÷ 2)).^2 / (2 * (window_size / 2)^2))
+        weights /= sum(weights)  # Normalisation des poids pour que leur somme soit égale à 1
+        start_idx = max(1, i - window_size ÷ 2)
+        end_idx = min(n, start_idx + window_size - 1)  # Ajustement de la fin de la tranche de données
+        data_slice = @view(data[start_idx:end_idx])
+        trend[i] = sum(data_slice .* weights[1:length(data_slice)])
+    end
+    return trend
+end
+
 
 function moyenne_mobile(data::Vector{T}, window_size::Int) where T
     n = length(data)

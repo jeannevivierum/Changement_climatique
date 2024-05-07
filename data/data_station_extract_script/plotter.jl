@@ -4,7 +4,7 @@ using DataFramesMeta
 using StatsBase
 using CSV
 
-df = CSV.read("data_tx/BASTIA.txt", DataFrame, skipto = 22, header = 21, comment="#",dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
+df = CSV.read("data_tx/LYON.txt", DataFrame, skipto = 22, header = 21, comment="#",dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
 
 factor = 0.1 # conversion factor to °C
 df_month = @chain df begin
