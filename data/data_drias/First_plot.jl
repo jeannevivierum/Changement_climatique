@@ -1,6 +1,6 @@
 using CSV, Dates, DataFrames, DataFramesMeta, Statistics
 
-df = CSV.read("data/data_drias/donnees/Brest.txt",DataFrame, header = 1, comment="#", dateformat = "yyyymmdd", types=Dict(:Date => Date), normalizenames=true)
+df = CSV.read("donnees/Orly.txt",DataFrame, header = 60, comment="#", dateformat = "yyyymmdd", types=Dict(:Date => Date), normalizenames=true)
 
 df_filtered = filter(row -> year(row.Date) >= 1970 && year(row.Date) <= 2006, df)
 

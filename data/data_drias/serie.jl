@@ -7,7 +7,7 @@ using TimeSeries: TimeArray # Importer uniquement TimeArray à partir de TimeSer
 using Plots
 
 # Charger les données
-df = CSV.read("data/data_drias/donnees/Orly.txt", DataFrame, header=1, comment="#", dateformat="yyyymmdd", types=Dict(:Date => Date), normalizenames=true)
+df = CSV.read("donnees/Orly.txt", DataFrame, header=1, comment="#", dateformat="yyyymmdd", types=Dict(:Date => Date), normalizenames=true)
 
 # Filtrer les données pour la période spécifiée
 df_filtered = filter(row -> year(row.Date) >= 1970 && year(row.Date) <= 2006, df)
