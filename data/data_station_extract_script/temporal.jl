@@ -6,6 +6,7 @@ using Statistics
 using Temporal
 using GLM
 using DataFramesMeta
+using Forecast
 
 # Charger les données
 df = CSV.read("data_tx/LYON.txt", DataFrame, skipto = 22, header = 21, comment="#", dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
@@ -22,6 +23,13 @@ df_daily = @chain df_filtered begin
     @transform(:YEAR = year.(:DATE)) # Ajouter une colonne pour l'année
     @by(:DATE, :DAILY_MEAN = mean(:TX)*factor, :DAILY_STD = std(:TX)*factor) # Grouper par DATE et prendre la moyenne / écart type
 end
+
+
+stl_df = stl(df_daily,365; robust=true, spm=true)
+stl_df.decomposition
+
+# je préfère plotter moi même je n'aime pas trop les plots tout integrés du genre plot (stl co2)*
+@df stl_df.decomposition plot(:Timestamp, :Seasonal)
 
 function moyenne_mobile(data::Vector{T}, window_size::Int) where T
     n = length(data)
