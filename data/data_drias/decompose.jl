@@ -40,7 +40,7 @@ using StatsBase
 
 # je ne sais pas pourquoi je n'arrive plus à importer les données correctement...
 #ça me refait le coup du truc qui marche pas jpp ok en fait si ca marche ouf
-df_drias = CSV.read("data/data_drias/donnees/Orly.txt",DataFrame, header = 60, comment="#", dateformat = "yyyymmdd", types=Dict(:Date => Date))
+df_drias = CSV.read("data_drias/donnees/Montpellier.txt",DataFrame, header = 60, comment="#", dateformat = "yyyymmdd", types=Dict(:Date => Date))
 df_filtered_drias = filter(row -> year(row.Date) >= 1951 && year(row.Date) <= 2005, df_drias)
 
 df_month_drias = @chain df_filtered_drias begin
