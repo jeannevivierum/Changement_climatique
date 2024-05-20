@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------------------------------------
 # Origine : DRIAS-CLIMAT - http://www.drias-climat.fr/commande  (produit par 'nc2txt_drias2020 1.2 du 12.07.2021')
-# Date d'extraction : 17/04/2024 10:10:54 UTC
+# Date d'extraction : 20/05/2024 10:26:24 UTC
 # -----------------------------------------------------------------------------------------------------------
 # Production : eurocordex2020
 # Modele : CNRM-ALADIN63 - CNRM-CERFACS-CNRM-CM5 (RCM - GCM)
@@ -57,7 +57,6 @@
 # Conditions d'utilisation :
 # http://www.drias-climat.fr/accompagnement/conditionsEDC
 # -----------------------------------------------------------------------------------------------------------
-Date Tmin Tmax Tmoy
 19510101 -0.26 5.88 3.60
 19510102 -2.10 2.08 -0.32
 19510103 -3.14 5.54 1.24
