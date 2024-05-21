@@ -12,7 +12,7 @@ using Forecast
 
 # Charger les données
 df = CSV.read("data_station_extract_script/data_tx/MONTPELLIER.txt", DataFrame, skipto = 22, header = 21, comment="#", dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
-df_drias = CSV.read("data_drias/donnees/Montpellier.txt",DataFrame, header = 60, comment="#", dateformat = "yyyymmdd", types=Dict(:Date => Date), normalizenames=true)
+df_drias = CSV.read("data_drias/Mod1_temp/Montpellier.txt",DataFrame, header = 60, comment="#", dateformat = "yyyymmdd", types=Dict(:Date => Date), normalizenames=true)
 
 # Filtrer les données entre 1951 et 2006
 df_filtered = filter(row -> year(row.DATE) >= 1951 && year(row.DATE) <= 2005, df)
