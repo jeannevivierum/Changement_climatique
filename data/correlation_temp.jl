@@ -15,26 +15,24 @@ using DataFrames: rename!
 # Fonction principale pour charger, filtrer et calculer les moyennes journalières
 function process_data(file_path)
     # Charger les données
-    df = CSV.read(file_path, DataFrame, header = 21, comment="#", dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
-    print(names(df))
-    print((df))
-    
+    df = CSV.read(file_path, DataFrame, skipto = 21, header = 20, comment="#", dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
     if "TX" in names(df)
         df_filtered = filter(row -> year(row.DATE) >= 1955 && year(row.DATE) <= 2005, df)
         factor = 0.1
         df_daily = @chain df_filtered begin
-            @subset(:Q_TX .!= 9) # Supprimer les valeurs manquantes 
+            @subset(:Q_TX .!= 9) # Supprimer les valeurs manquantes
             @transform(:YEAR = year.(:DATE)) # Ajouter une colonne pour l'année
-            @by(:DATE, :DAILY_MEAN = mean(:TX)*factor, :DAILY_STD = std(:TX)*factor) # Grouper par DATE 
+            @by(:DATE, :DAILY_MEAN = mean(:TX)*factor, :DAILY_STD = std(:TX)*factor)
         end
     else
         df = CSV.read(file_path, DataFrame, header = 48, comment="#", dateformat = "yyyymmdd", types=Dict(:Date => Date), normalizenames=true)
+        println(names(df))
         if !("Tmax" in names(df))
             df = CSV.read(file_path, DataFrame, header = 47, comment="#", dateformat = "yyyymmdd", types=Dict(:Date => Date), normalizenames=true)
+            println(names(df))
         end
         df_filtered = filter(row -> year(row.Date) >= 1955 && year(row.Date) <= 2005, df)
         df_daily = @chain df_filtered begin
-            @transform(:YEAR = year.(:Date)) # Ajouter une colonne pour l'année
             @by(:Date, :DAILY_MEAN = mean(:Tmax), :DAILY_STD = std(:Tmax))
         end
     end
@@ -70,12 +68,12 @@ end
 # Exemple d'utilisation
 
 data_folder = "data_station_extract_script/data_tx/"
-data_folder_drias = "data_drias/Mod1_temp/"
-data_folder_mod2 = "data_drias/Mod2_temp/"
-x = "data_station_extract_script/data_tx/AJACCIO.txt"
-process_data(x)
-corr_matrix_aladin = calculate_correlations(data_folder) 
-- calculate_correlations(data_folder) 
+data_folder_drias = "data_drias/Mod1_pluie/"
+data_folder_mod2 = "data_drias/Mod2_pluie/"
+process_data("data_station_extract_script/data_tx/AJACCIO.txt")
+process_data("data_drias/Mod1_temp/Ajaccio.txt")
+process_data("data_drias/Mod2_temp/Ajaccio.txt")
+corr_matrix_aladin = calculate_correlations(data_folder_drias) - calculate_correlations(data_folder) 
 corr_matrix_racmo = calculate_correlations(data_folder_mod2) - calculate_correlations(data_folder) 
 # Tracer la matrice de corrélation
 custom_palette = cgrad([:brown, :white, :purple], scale=false)
@@ -101,5 +99,4 @@ heatmap(
     xrotation=80
 )
 savefig("matrice_pluie_racmo")
-
 
