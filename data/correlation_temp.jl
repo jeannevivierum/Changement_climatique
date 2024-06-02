@@ -18,22 +18,28 @@ function process_data(file_path)
     df = CSV.read(file_path, DataFrame, skipto = 21, header = 20, comment="#", dateformat = "yyyymmdd", types=Dict(:DATE => Date), normalizenames=true)
     if "TX" in names(df)
         df_filtered = filter(row -> year(row.DATE) >= 1955 && year(row.DATE) <= 2005, df)
-        factor = 0.1
         df_daily = @chain df_filtered begin
             @subset(:Q_TX .!= 9) # Supprimer les valeurs manquantes
             @transform(:YEAR = year.(:DATE)) # Ajouter une colonne pour l'année
-            @by(:DATE, :DAILY_MEAN = mean(:TX)*factor, :DAILY_STD = std(:TX)*factor)
+            @by(:DATE, :DAILY_MEAN = mean(:TX), :DAILY_STD = std(:TX))
+            @transform(:YEAR = year.(:DATE)) # Ajouter une colonne pour l'année
+            @by(:YEAR, :YEARLY_SUM = sum(:DAILY_MEAN))
         end
     else
-        df = CSV.read(file_path, DataFrame, header = 48, comment="#", dateformat = "yyyymmdd", types=Dict(:Date => Date), normalizenames=true)
-        println(names(df))
+        df = CSV.read(file_path, DataFrame, header = 60, comment="#", dateformat = "yyyymmdd", types=Dict(:Date => Date), normalizenames=true)
         if !("Tmax" in names(df))
-            df = CSV.read(file_path, DataFrame, header = 47, comment="#", dateformat = "yyyymmdd", types=Dict(:Date => Date), normalizenames=true)
-            println(names(df))
+            df = CSV.read(file_path, DataFrame, header = 59, comment="#", dateformat = "yyyymmdd", types=Dict(:Date => Date), normalizenames=true)
         end
-        df_filtered = filter(row -> year(row.Date) >= 1955 && year(row.Date) <= 2005, df)
-        df_daily = @chain df_filtered begin
-            @by(:Date, :DAILY_MEAN = mean(:Tmax), :DAILY_STD = std(:Tmax))
+        if "Tmax" in names(df)
+            df_filtered = filter(row -> year(row.Date) >= 1955 && year(row.Date) <= 2005, df)
+            df_daily = @chain df_filtered begin
+                @transform(:YEAR = year.(:Date)) # Ajouter une colonne pour l'année
+                @by(:Date, :DAILY_MEAN = mean(:Tmax), :DAILY_STD = std(:Tmax))
+                @transform(:YEAR = year.(:Date)) # Ajouter une colonne pour l'année
+                @by(:YEAR, :YEARLY_SUM = sum(:DAILY_MEAN))
+            end
+        else
+            error("Les colonnes 'TX' ou 'Tmax' ne sont pas présentes dans le fichier : $file_path")
         end
     end
     
@@ -68,15 +74,12 @@ end
 # Exemple d'utilisation
 
 data_folder = "data_station_extract_script/data_tx/"
-data_folder_drias = "data_drias/Mod1_pluie/"
-data_folder_mod2 = "data_drias/Mod2_pluie/"
-process_data("data_station_extract_script/data_tx/AJACCIO.txt")
-process_data("data_drias/Mod1_temp/Ajaccio.txt")
-process_data("data_drias/Mod2_temp/Ajaccio.txt")
-corr_matrix_aladin = calculate_correlations(data_folder_drias) - calculate_correlations(data_folder) 
-corr_matrix_racmo = calculate_correlations(data_folder_mod2) - calculate_correlations(data_folder) 
-# Tracer la matrice de corrélation
-custom_palette = cgrad([:brown, :white, :purple], scale=false)
+data_folder_drias = "data_drias/Mod1_temp/"
+data_folder_mod2 = "data_drias/Mod2_temp/"
+corr_matrix_aladin = calculate_correlations(data_folder) - calculate_correlations(data_folder_drias)
+corr_matrix_racmo = calculate_correlations(data_folder) - calculate_correlations(data_folder_mod2) 
+
+
 heatmap(
     corr_matrix_aladin,
     xticks=(1:length(station_names), collect(station_names)),
@@ -87,7 +90,8 @@ heatmap(
     clim=(-2, 2),
     xrotation=80
 )
-savefig("matrice_pluie_aladin")
+savefig("matrice_temp_aladin")
+
 heatmap(
     corr_matrix_racmo,
     xticks=(1:length(station_names), collect(station_names)),
@@ -98,5 +102,4 @@ heatmap(
     clim=(-2, 2),
     xrotation=80
 )
-savefig("matrice_pluie_racmo")
-
+savefig("matrice_temp_racmo")
